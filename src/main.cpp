@@ -1,8 +1,10 @@
 #include <iostream>
+#include <cstring>
 #include "glad.h"
 #include <GLFW/glfw3.h>
 #include "../include/two_d/shapes/shape.h"
 #include "../include/two_d/shapes/triangle.h"
+#include "../include/utils/readShader.h"
 
 GLfloat points[] = {
     0.0f, 0.5f, 0.0f,
@@ -21,24 +23,6 @@ GLfloat colors[] = {
     0.0f, 1.0f, 0.0f,
     0.0f, 0.0f, 1.0f
 };
-
-const char *vertexShader =
-"#version 330\n"
-"layout(location = 0) in vec3 vertex_position;"
-"layout(location = 1) in vec3 vertex_color;"
-"out vec3 color;"
-"void main() {"
-"   color = vertex_color;"
-"   gl_Position = vec4(vertex_position, 1.0);"
-"}";
-
-const char *fragmentShader =
-"#version 330\n"
-"in vec3 color;"
-"out vec4 frag_color;"
-"void main() {"
-"   frag_color = vec4(color, 1.0);"
-"}";
 
 int main()
 {
@@ -60,6 +44,14 @@ int main()
     }
 
     glClearColor(0.25f, 0.5f, 0.75f, 1.0f);
+
+    std::string path(std::getenv("FILE")); // here we need environment variable
+
+    const std::string shader1 = utils::ReadShader(path + "/modules/shaders/triangle.vert");
+    const GLchar *vertexShader = shader1.c_str();
+
+    const std::string shader2 = utils::ReadShader(path + "/modules/shaders/triangle.frag");
+    const GLchar *fragmentShader = shader2.c_str();
 
     two_d::Shape *shape = new two_d::Triangle(vertexShader, fragmentShader, points, colors);
     two_d::Shape *triangleShape = new two_d::Triangle(vertexShader, fragmentShader, points2, colors);
