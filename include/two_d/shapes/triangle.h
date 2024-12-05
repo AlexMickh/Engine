@@ -1,4 +1,6 @@
 #pragma once
+
+#include <cmath>
 #include "shape.h"
 
 namespace two_d
@@ -8,8 +10,11 @@ namespace two_d
     private:
         GLuint shaderProgram;
         GLuint vao;
+        GLfloat points[9] = {0.0f};
+    
+        void convertVector(two_d::Vector2 position, GLuint a);
     public:
-        Triangle(const char *vertexShader, const char *fragmentShader, GLfloat points[], GLfloat colors[]);
+        Triangle(const char *vertexShader, const char *fragmentShader, two_d::Vector2 position, GLfloat a, GLfloat colors[]);
         GLuint GetShaderProgram() override;
         GLuint GetVao() override;
     };

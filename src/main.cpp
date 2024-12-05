@@ -5,17 +5,18 @@
 #include "../include/two_d/shapes/shape.h"
 #include "../include/two_d/shapes/triangle.h"
 #include "../include/utils/readShader.h"
+#include "../include/two_d/vector2.h"
 
 GLfloat points[] = {
     0.0f, 0.5f, 0.0f,
-    0.5f, -0.5f, 0.0f,
-    -0.5f, -0.5f, 0.0f
+    -0.5f, -0.5f, 0.0f,
+    0.5f, -0.5f, 0.0f
 };
 
 GLfloat points2[] = {
-    0.5f, 0.5f, 0.0f,
     0.0f, -0.5f, 0.0f,
-    -0.5f, 0.5f, 0.0f
+    -0.5f, 0.5f, 0.0f,
+    0.5f, 0.5f, 0.0f
 };
 
 GLfloat colors[] = {
@@ -53,8 +54,8 @@ int main()
     const std::string shader2 = utils::ReadShader(path + "/modules/shaders/triangle.frag");
     const GLchar *fragmentShader = shader2.c_str();
 
-    two_d::Shape *shape = new two_d::Triangle(vertexShader, fragmentShader, points, colors);
-    two_d::Shape *triangleShape = new two_d::Triangle(vertexShader, fragmentShader, points2, colors);
+    two_d::Shape *shape = new two_d::Triangle(vertexShader, fragmentShader, two_d::Vector2(0.0f, 0.0f), 3.0f, colors);
+    two_d::Shape *triangleShape = new two_d::Triangle(vertexShader, fragmentShader, two_d::Vector2(50.0f, 50.0f), 3.0f, colors);
 
     while (!glfwWindowShouldClose(window))
     {
